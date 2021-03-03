@@ -33,8 +33,19 @@ function displayTemperature(response) {
    iconElement.setAttribute(`alt`,response.data.weather[0].description);
 }
 
-let apiKey = `34a66ef508b0cc45fe99cd407595565c`;
-let city = `Lisbon`;
-let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+function search(city) {
+    let apiKey = `34a66ef508b0cc45fe99cd407595565c`;
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(displayTemperature);
+}
 
-axios.get(apiUrl).then(displayTemperature);
+function handleSubmit(event) {
+    event.preventDefault();
+    let cityInputElement = document.querySelector("#city-input");
+    search(cityInputElement.value);
+}
+
+search("Tokyo");
+
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
